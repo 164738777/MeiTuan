@@ -2,41 +2,38 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan  
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { Heading1, Heading2, Paragraph } from './Text'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {Heading1, Heading2, Paragraph} from './Text'
 import Separator from './Separator'
-import { screen, system, tool } from '../common'
+import {screen, system, tool} from '../common'
 
-// create a component
-class DetailCell extends PureComponent {
+// 我的 页面 List 的Item
+export default class DetailCell extends PureComponent {
     render() {
-        let icon = this.props.image && <Image style={styles.icon} source={this.props.image} />
-        
+        let icon = this.props.image && <Image style={styles.icon} source={this.props.image}/>;
+
         return (
             <View style={styles.container}>
                 <TouchableOpacity>
                     <View style={[styles.content, this.props.style]}>
                         {icon}
                         <Heading2>{this.props.title}</Heading2>
-                        <View style={{ flex: 1, backgroundColor: 'blue' }} />
-                        <Paragraph style={{ color: '#999999' }}>{this.props.subtitle}</Paragraph>
-                        <Image style={styles.arrow} source={require('../img/Public/cell_arrow.png')} />
+                        <View style={{flex: 1}}/>
+                        <Paragraph style={{color: '#999999'}}>{this.props.subtitle}</Paragraph>
+                        <Image style={styles.arrow} source={require('../img/Public/cell_arrow.png')}/>
                     </View>
-
-                    <Separator />
+                    <Separator/>
                 </TouchableOpacity>
             </View>
         );
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
@@ -64,6 +61,3 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     }
 });
-
-//make this component available to the app
-export default DetailCell;
