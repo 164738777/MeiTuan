@@ -2,35 +2,34 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan  
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import { Heading1, Heading2 } from '../../widget/Text'
-import { screen, system, tool } from '../../common'
-import { color } from '../../widget'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import {Heading1, Heading2} from '../../widget/Text'
+import {screen, system, tool} from '../../common'
+import {color} from '../../widget'
 
-// create a component
-class HomeGridItem extends PureComponent {
+// 团购 页面中间的4个大按钮Item
+export default class HomeGridItem extends PureComponent {
     render() {
-        let info = this.props.info
+        let info = this.props.info;
 
-        let title = info.maintitle
-        let color = info.typeface_color
-        let subtitle = info.deputytitle
-        let imageUrl = info.imageurl.replace('w.h', '120.0')
+        let title = info.maintitle;
+        let color = info.typeface_color;
+        let subtitle = info.deputytitle;
+        let imageUrl = info.imageurl.replace('w.h', '120.0');
 
         return (
             <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
                 <View>
-                    <Heading1 style={{ color: color, marginBottom: 10 }}>{title}</Heading1>
+                    <Heading1 style={{color: color, marginBottom: 10}}>{title}</Heading1>
                     <Heading2 >{subtitle}</Heading2>
                 </View>
 
-                <Image style={styles.icon} source={{ uri: imageUrl }} />
+                <Image style={styles.icon} source={{uri: imageUrl}}/>
             </TouchableOpacity>
         );
     }
@@ -54,6 +53,3 @@ const styles = StyleSheet.create({
         height: screen.width / 5,
     }
 });
-
-//make this component available to the app
-export default HomeGridItem;

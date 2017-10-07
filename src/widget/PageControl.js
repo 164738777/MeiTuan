@@ -11,7 +11,7 @@ import React, { PureComponent } from 'react'
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import assign from 'object-assign';
 
-class PageControl extends PureComponent {
+export default class PageControl extends PureComponent {
 
     static propTypes = {
         numberOfPages: React.PropTypes.number.isRequired,
@@ -23,7 +23,7 @@ class PageControl extends PureComponent {
         indicatorStyle: View.propTypes.style,
         currentIndicatorStyle: View.propTypes.style,
         onPageIndicatorPress: React.PropTypes.func
-    }
+    };
 
     static defaultProps = {
         numberOfPages: 0,
@@ -35,7 +35,7 @@ class PageControl extends PureComponent {
         indicatorStyle: {},
         currentIndicatorStyle: {},
         onPageIndicatorPress: function () { }
-    }
+    };
 
     onPageIndicatorPress(index: number) {
         this.props.onPageIndicatorPress(index);
@@ -72,7 +72,7 @@ class PageControl extends PureComponent {
         return (
             this.props.hidesForSinglePage && pages.length <= 1 ? null : <View style={[styles.container, defaultStyle, style]}>
                 {pages.map((el, i) => <TouchableWithoutFeedback key={i} onPress={this.onPageIndicatorPress.bind(this, i)}>
-                    <View style={i == this.props.currentPage ? currentIndicatorStyle : indicatorStyle} />
+                    <View style={i === this.props.currentPage ? currentIndicatorStyle : indicatorStyle} />
                 </TouchableWithoutFeedback>
                 )}
             </View>
@@ -88,5 +88,3 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     }
 });
-
-export default PageControl;

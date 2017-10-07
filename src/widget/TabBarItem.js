@@ -1,11 +1,10 @@
-//import liraries
 import React, { PureComponent } from 'react'
 import { Image } from 'react-native'
 
-// create a component
+// 主页的TabBarItem
 class TabBarItem extends PureComponent {
     render() {
-        let selectedImage = this.props.selectedImage ? this.props.selectedImage : this.props.normalImage
+        let selectedImage = this.props.selectedImage ? this.props.selectedImage : this.props.normalImage;
         return (
             <Image
                 source={this.props.focused
@@ -17,5 +16,4 @@ class TabBarItem extends PureComponent {
     }
 }
 
-//make this component available to the app
 export default TabBarItem;

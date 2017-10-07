@@ -2,38 +2,33 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan  
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ListView, Image, InteractionManager } from 'react-native'
-import { color, Button, NavigationItem, RefreshListView, RefreshState, Separator, SpacingView } from '../../widget'
-import { Heading1, Heading2, Paragraph, HeadingBig } from '../../widget/Text'
-import { screen, system, tool } from '../../common'
-import api, { recommendUrlWithId, groupPurchaseDetailWithId } from '../../api'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, ListView, Image, InteractionManager} from 'react-native'
+import {color, Button, NavigationItem, RefreshListView, RefreshState, Separator, SpacingView} from '../../widget'
+import {Heading1, Heading2, Paragraph, HeadingBig} from '../../widget/Text'
+import {screen, system, tool} from '../../common'
+import api, {recommendUrlWithId, groupPurchaseDetailWithId} from '../../api'
 import GroupPurchaseCell from './GroupPurchaseCell'
 
-// create a component
-class GroupPurchaseScene extends PureComponent {
+export default class GroupPurchaseScene extends PureComponent {
 
     listView: ListView
 
     state: {
         info: Object,
         dataSource: ListView.DataSource
-    }
+    };
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({navigation}) => ({
         headerTitle: '团购详情',
-        headerStyle: { backgroundColor: 'white' },
+        headerStyle: {backgroundColor: 'white'},
         headerRight: (
             <NavigationItem
                 icon={require('../../img/Public/icon_navigationItem_share@2x.png')}
-                onPress={() => {
-
-                }}
             />
         ),
     });
@@ -41,7 +36,7 @@ class GroupPurchaseScene extends PureComponent {
     constructor(props: Object) {
         super(props);
 
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
             info: {},
@@ -50,7 +45,6 @@ class GroupPurchaseScene extends PureComponent {
     }
 
     componentDidMount() {
-
         InteractionManager.runAfterInteractions(() => {
             this.listView.startHeaderRefreshing();
         });
@@ -59,7 +53,6 @@ class GroupPurchaseScene extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
-
                 <RefreshListView
                     ref={(e) => this.listView = e}
                     dataSource={this.state.dataSource}
@@ -67,7 +60,7 @@ class GroupPurchaseScene extends PureComponent {
                     renderRow={(rowData) =>
                         <GroupPurchaseCell
                             info={rowData}
-                            onPress={() => this.props.navigation.navigate('GroupPurchase', { info: rowData })}
+                            onPress={() => this.props.navigation.navigate('GroupPurchase', {info: rowData})}
                         />
                     }
                     onHeaderRefresh={() => this.requestData()}
@@ -77,21 +70,21 @@ class GroupPurchaseScene extends PureComponent {
     }
 
     renderHeader() {
-        let info = this.props.navigation.state.params.info
+        let info = this.props.navigation.state.params.info;
 
         return (
             <View>
                 <View>
-                    <Image style={styles.banner} source={{ uri: info.imageUrl.replace('w.h', '480.0') }} />
+                    <Image style={styles.banner} source={{uri: info.imageUrl.replace('w.h', '480.0')}}/>
 
                     <View style={styles.topContainer}>
-                        <Heading1 style={{ color: color.theme }}>￥</Heading1>
-                        <HeadingBig style={{ marginBottom: -8 }}>{info.price}</HeadingBig>
-                        <Paragraph style={{ marginLeft: 10 }}>门市价：￥{(info.price * 1.1).toFixed(0)}</Paragraph>
-                        <View style={{ flex: 1 }} />
+                        <Heading1 style={{color: color.theme}}>￥</Heading1>
+                        <HeadingBig style={{marginBottom: -8}}>{info.price}</HeadingBig>
+                        <Paragraph style={{marginLeft: 10}}>门市价：￥{(info.price * 1.1).toFixed(0)}</Paragraph>
+                        <View style={{flex: 1}}/>
                         <Button
                             title='立即抢购'
-                            style={{ color: 'white', fontSize: 18 }}
+                            style={{color: 'white', fontSize: 18}}
                             containerStyle={styles.buyButton}
                         />
                     </View>
@@ -101,9 +94,10 @@ class GroupPurchaseScene extends PureComponent {
 
                 <View>
                     <View style={styles.tagContainer}>
-                        <Image style={{ width: 20, height: 20 }} source={require('../../img/Home/icon_deal_anytime_refund.png')} />
-                        <Paragraph style={{ color: '#89B24F' }}>  随时退</Paragraph>
-                        <View style={{ flex: 1 }} />
+                        <Image style={{width: 20, height: 20}}
+                               source={require('../../img/Home/icon_deal_anytime_refund.png')}/>
+                        <Paragraph style={{color: '#89B24F'}}> 随时退</Paragraph>
+                        <View style={{flex: 1}}/>
                         <Paragraph>已售{1234}</Paragraph>
                     </View>
 
@@ -119,8 +113,8 @@ class GroupPurchaseScene extends PureComponent {
     }
 
     requestData() {
-        this.requestDetail()
-        this.requestRecommend()
+        this.requestDetail();
+        this.requestRecommend();
     }
 
     requestDetail() {
@@ -157,7 +151,6 @@ class GroupPurchaseScene extends PureComponent {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -193,6 +186,3 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     }
 });
-
-//make this component available to the app
-export default GroupPurchaseScene;

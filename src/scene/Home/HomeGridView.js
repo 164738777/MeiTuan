@@ -2,23 +2,22 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan  
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet } from 'react-native'
-import { color } from '../../widget'
-import { screen, system, tool } from '../../common'
+import React, {PureComponent} from 'react';
+import {View, Text, StyleSheet} from 'react-native'
+import {color} from '../../widget'
+import {screen, system, tool} from '../../common'
 import HomeGridItem from './HomeGridItem'
 
-// create a component
-class HomeGridView extends PureComponent {
+// 团购 页面中间的4个大按钮组件
+export default class HomeGridView extends PureComponent {
 
     static defaultProps = {
         infos: []
-    }
+    };
 
     render() {
         return (
@@ -27,14 +26,13 @@ class HomeGridView extends PureComponent {
                     <HomeGridItem
                         info={info}
                         key={index}
-                        onPress={() => this.props.onGridSelected(index)} />
+                        onPress={() => this.props.onGridSelected(index)}/>
                 ))}
             </View>
         );
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -45,6 +43,3 @@ const styles = StyleSheet.create({
         borderColor: color.border
     },
 });
-
-//make this component available to the app
-export default HomeGridView;

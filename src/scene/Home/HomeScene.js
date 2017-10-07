@@ -2,70 +2,62 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan 
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ListView, Image, StatusBar, FlatList } from 'react-native'
+import React, {PureComponent} from 'react'
+import {View, StyleSheet, TouchableOpacity, Image, StatusBar, FlatList} from 'react-native'
 
-import { Heading1, Heading2, Paragraph } from '../../widget/Text'
-import { color, Button, NavigationItem, SearchBar, SpacingView } from '../../widget'
+import {Heading1, Heading2, Paragraph} from '../../widget/Text'
+import {color, Button, NavigationItem, SearchBar, SpacingView} from '../../widget'
 
-import { screen, system } from '../../common'
+import {screen, system} from '../../common'
 import api from '../../api'
-
 
 import HomeMenuView from './HomeMenuView'
 import HomeGridView from './HomeGridView'
 import GroupPurchaseCell from '../GroupPurchase/GroupPurchaseCell'
 
-// create a component
-class HomeScene extends PureComponent {
+export default class HomeScene extends PureComponent {
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({navigation}) => ({
         headerTitle: (
             <TouchableOpacity style={styles.searchBar}>
-                <Image source={require('../../img/Home/search_icon.png')} style={styles.searchIcon} />
+                <Image source={require('../../img/Home/search_icon.png')} style={styles.searchIcon}/>
                 <Paragraph>一点点</Paragraph>
             </TouchableOpacity>
         ),
         headerRight: (
             <NavigationItem
                 icon={require('../../img/Home/icon_navigationItem_message_white@2x.png')}
-                onPress={() => {
-
-                }}
             />
         ),
         headerLeft: (
             <NavigationItem
                 title='福州'
-                titleStyle={{ color: 'white' }}
-                onPress={() => {
-
-                }}
+                titleStyle={{color: 'white'}}
             />
         ),
-        headerStyle: { backgroundColor: color.theme },
-    })
+        headerStyle: {backgroundColor: color.theme},
+    });
 
     state: {
         discounts: Array<Object>,
         dataList: Array<Object>,
         refreshing: boolean,
-    }
+    };
 
     constructor(props: Object) {
-        super(props)
+        super(props);
 
         this.state = {
             discounts: [],
             dataList: [],
             refreshing: false,
-        }
+        };
 
+        // 相当于 this.requestData = this.requestData.bind(this);
         { (this: any).requestData = this.requestData.bind(this) }
         { (this: any).renderCell = this.renderCell.bind(this) }
         { (this: any).onCellSelected = this.onCellSelected.bind(this) }
@@ -76,23 +68,23 @@ class HomeScene extends PureComponent {
     }
 
     componentDidMount() {
-        this.requestData()
+        // 加载完组件后，异步加载数据
+        this.requestData();
     }
 
     requestData() {
-        this.setState({ refreshing: true })
+        this.setState({refreshing: true});
 
-        this.requestDiscount()
-        this.requestRecommend()
+        this.requestDiscount();
+        this.requestRecommend();
     }
 
     async requestRecommend() {
         try {
-            let response = await fetch(api.recommend)
-            let json = await response.json()
+            let response = await fetch(api.recommend);
+            let json = await response.json();
 
-            let dataList = json.data.map(
-                (info) => {
+            let dataList = json.data.map((info) => {
                     return {
                         id: info.id,
                         imageUrl: info.squareimgurl,
@@ -101,24 +93,26 @@ class HomeScene extends PureComponent {
                         price: info.price
                     }
                 }
-            )
+            );
 
             this.setState({
                 dataList: dataList,
                 refreshing: false,
-            })
+            });
         } catch (error) {
-            this.setState({ refreshing: false })
+            this.setState({refreshing: false});
         }
     }
 
+    // 异步执行，相当与Promise，出现于ES7
     async requestDiscount() {
         try {
-            let response = await fetch(api.discount)
-            let json = await response.json()
-            this.setState({ discounts: json.data })
+            // await 会阻塞后面的代码，等fetch完成后才继续进行.
+            let response = await fetch(api.discount);
+            let json = await response.json();
+            this.setState({discounts: json.data});
         } catch (error) {
-            alert(error)
+            alert(error);
         }
     }
 
@@ -132,24 +126,24 @@ class HomeScene extends PureComponent {
     }
 
     onCellSelected(info: Object) {
-        StatusBar.setBarStyle('default', false)
-        this.props.navigation.navigate('GroupPurchase', { info: info })
+        StatusBar.setBarStyle('default', false);
+        this.props.navigation.navigate('GroupPurchase', {info: info})
     }
 
     keyExtractor(item: Object, index: number) {
-        return item.id
+        return item.id;
     }
 
     renderHeader() {
         return (
             <View>
-                <HomeMenuView menuInfos={api.menuInfo} onMenuSelected={this.onMenuSelected} />
+                <HomeMenuView menuInfos={api.menuInfo} onMenuSelected={this.onMenuSelected}/>
 
-                <SpacingView />
+                <SpacingView/>
 
-                <HomeGridView infos={this.state.discounts} onGridSelected={(this.onGridSelected)} />
+                <HomeGridView infos={this.state.discounts} onGridSelected={(this.onGridSelected)}/>
 
-                <SpacingView />
+                <SpacingView/>
 
                 <View style={styles.recommendHeader}>
                     <Heading2>猜你喜欢</Heading2>
@@ -159,19 +153,19 @@ class HomeScene extends PureComponent {
     }
 
     onGridSelected(index: number) {
-        let discount = this.state.discounts[index]
+        let discount = this.state.discounts[index];
 
-        if (discount.type == 1) {
-            StatusBar.setBarStyle('default', false)
+        if (discount.type === 1) {
+            StatusBar.setBarStyle('default', false);
 
-            let location = discount.tplurl.indexOf('http')
-            let url = discount.tplurl.slice(location)
-            this.props.navigation.navigate('Web', { url: url })
+            let location = discount.tplurl.indexOf('http');
+            let url = discount.tplurl.slice(location);
+            this.props.navigation.navigate('Web', {url: url});
         }
     }
 
     onMenuSelected(index: number) {
-        alert(index)
+        alert(index);
     }
 
     render() {
@@ -190,7 +184,6 @@ class HomeScene extends PureComponent {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -221,6 +214,3 @@ const styles = StyleSheet.create({
         margin: 5,
     }
 });
-
-//make this component available to the app
-export default HomeScene;

@@ -2,24 +2,23 @@
  * Copyright (c) 2017-present, Liu Jinyong
  * All rights reserved.
  *
- * https://github.com/huanxsd/MeiTuan 
+ * https://github.com/huanxsd/MeiTuan
  * @flow
  */
 
-//import liraries
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
 
-import { Heading2 } from '../../widget/Text'
-import { screen, system, tool } from '../../common'
+import {Heading2} from '../../widget/Text'
+import {screen, system, tool} from '../../common'
 
-// create a component
-class HomeMenuItem extends PureComponent {
+// 团购 页面顶部10个小按钮Item
+export default class HomeMenuItem extends PureComponent {
     render() {
         return (
             <TouchableOpacity style={styles.container}
-                onPress={this.props.onPress}>
-                <Image source={this.props.icon} resizeMode='contain' style={styles.icon} />
+                              onPress={this.props.onPress}>
+                <Image source={this.props.icon} resizeMode='contain' style={styles.icon}/>
                 <Heading2>
                     {this.props.title}
                 </Heading2>
@@ -28,7 +27,6 @@ class HomeMenuItem extends PureComponent {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
@@ -42,6 +40,3 @@ const styles = StyleSheet.create({
         margin: 5,
     }
 });
-
-//make this component available to the app
-export default HomeMenuItem;
