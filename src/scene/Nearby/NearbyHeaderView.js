@@ -6,28 +6,28 @@
  * @flow
  */
 
-//import liraries
 import React, { PureComponent } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Heading1, Heading2, Paragraph } from '../../widget/Text'
 import { screen, system, tool } from '../../common'
 import { color } from '../../widget'
 
-// create a component
-class NearbyHeaderView extends PureComponent {
+// 附近 list页面的头部
+export default class NearbyHeaderView extends PureComponent {
     static defaultProps = {
         onSelected: () => { }
-    }
+    };
+
     render() {
         return (
             <View style={styles.container}>
                 {this.props.titles.map((title, i) => (
                     <TouchableOpacity
-                        style={[{ backgroundColor: this.props.selectedIndex == i ? '#FE566D' : 'white' }, styles.item]}
+                        style={[{ backgroundColor: this.props.selectedIndex === i ? '#FE566D' : 'white' }, styles.item]}
                         key={i}
                         onPress={() => this.props.onSelected(i)}>
                         <Paragraph
-                            style={{ color: this.props.selectedIndex == i ? 'white' : '#555555' }}>
+                            style={{ color: this.props.selectedIndex === i ? 'white' : '#555555' }}>
                             {this.props.titles[i]}
                         </Paragraph>
                     </TouchableOpacity>
@@ -37,7 +37,6 @@ class NearbyHeaderView extends PureComponent {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -56,6 +55,3 @@ const styles = StyleSheet.create({
         borderColor: color.border,
     },
 });
-
-//make this component available to the app
-export default NearbyHeaderView;
