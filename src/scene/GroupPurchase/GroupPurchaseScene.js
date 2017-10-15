@@ -100,7 +100,6 @@ export default class GroupPurchaseScene extends PureComponent {
                         <View style={{flex: 1}}/>
                         <Paragraph>已售{1234}</Paragraph>
                     </View>
-
                 </View>
 
                 <SpacingView />
